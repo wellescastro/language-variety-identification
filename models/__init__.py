@@ -1,0 +1,1 @@
+from .SimpleNN import SimpleNN, Model
