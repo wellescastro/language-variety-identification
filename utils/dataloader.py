@@ -40,7 +40,3 @@ if __name__ == '__main__':
 
     dataset_reader = DSLSharedTaskDataset()
     instances = dataset_reader.read(txt_path)
-
-    # for instance in instances[:10]:
-    #     print(instance)
-    #     exit()
