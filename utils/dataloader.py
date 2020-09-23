@@ -27,7 +27,14 @@ class DSLSharedTaskDataset(DatasetReader):
                 label_field = LabelField(label)
                 fields = {'text': text_field, 'label': label_field}
                 yield Instance(fields)
-
+                
+    def text_to_instance(self, text: str, label: str = None) -> Instance:
+            tokens = self.tokenizer.tokenize(text)
+            text_field = TextField(tokens, self.token_indexers)
+            fields = {'text': text_field}
+            if label:
+                fields['label'] = LabelField(label)
+            return Instance(fields)
 
 
 if __name__ == '__main__':

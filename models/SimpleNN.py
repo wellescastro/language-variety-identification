@@ -32,7 +32,7 @@ class SimpleNN(Model):
 
     def forward(self,
                 text: Dict[str, torch.Tensor],
-                label: torch.Tensor) -> Dict[str, torch.Tensor]:
+                label: torch.Tensor = None) -> Dict[str, torch.Tensor]:
         # Shape: (batch_size, num_tokens, embedding_dim)
         embedded_text = self.embedder(text)
         # Shape: (batch_size, num_tokens)
@@ -45,11 +45,11 @@ class SimpleNN(Model):
         logits = self.output_layer(x)
         # Shape: (batch_size, num_labels)
         probs = torch.nn.functional.softmax(logits, dim=-1)
-        # Shape: (1,)
-        loss = torch.nn.functional.cross_entropy(logits, label)
-
-        self.accuracy(logits, label)
-        return {'loss': loss, 'probs': probs}
+        output = {'probs' : probs}
+        if label is not None:
+            output['loss'] = torch.nn.functional.cross_entropy(logits, label)
+            self.accuracy(logits, label)
+        return output
     
     def get_metrics(self, reset: bool = False) -> Dict[str, float]:
         return {"accuracy_" + self.model_state[self.training]: self.accuracy.get_metric(reset)}
