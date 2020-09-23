@@ -22,18 +22,23 @@ if __name__ == "__main__":
     parser.add_argument("--serialization_dir", type=str, default="weights/")
     parser.add_argument("--model_checkpoint", type=str, default="best.th")
     parser.add_argument("--config", type=str, default="config.json")
+    parser.add_argument("--text", type=str)
     
     args = parser.parse_args()
+    serialization_dir = args.serialization_dir
+    model_checkpoint = args.model_checkpoint
+    params = Params.from_file(args.config)
+    text = args.text
+    
     dataset_reader = DSLSharedTaskDataset()
 
-    weights_file = os.path.join(args.serialization_dir, args.model_checkpoint)
-    config = Params.from_file(args.config)
-    config["data_loader"]["shuffle"] = 0 # shuffle disabled for evaluation
-    model = Model.load(config, args.serialization_dir, weights_file=weights_file, cuda_device=0)
+    weights_file = os.path.join(serialization_dir, model_checkpoint)
+    params["data_loader"]["shuffle"] = 0 # shuffle disabled for evaluation
+    model = Model.load(params, args.serialization_dir, weights_file=weights_file, cuda_device=0)
     vocab = model.vocab
 
     predictor = SentenceClassifierPredictor(model, dataset_reader)
 
-    output = predictor.predict('Oi, como você está? Eu estou bem!')
+    output = predictor.predict(text)
     print([(vocab.get_token_from_index(label_id, 'labels'), prob)
         for label_id, prob in enumerate(output['probs'])])
