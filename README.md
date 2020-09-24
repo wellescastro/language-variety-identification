@@ -5,10 +5,10 @@ This project was conducted to study the use of the AllenNLP (PyTorch) tool for a
 
 
 # Dataset
-You should download the [DSL Shared Task] dataset(http://ttg.uni-saarland.de/resources/DSLCC/) (I have used the version DSLCC v2.1 - the 2016 edition) and adjust the config.json file with the paths for the training, validation and testing (gold standard) text files. You can check the config.json file for an example.
+You should download the DSL Shared Task dataset(http://ttg.uni-saarland.de/resources/DSLCC/) (I have used the version DSLCC v2.1 - the 2016 edition) and adjust the config.json file with the paths for the training, validation and testing (gold standard) text files. You can check the config.json file for an example.
 
 ## Data Preprocessing
-After download the dataset, we filter the portuguese samples using the `utils/preprocessing.py` sript, which reveis as argument the basepath containing the DSLCC traind and gold folders. 
+After download the dataset, we filter the portuguese samples using the `utils/preprocessing.py` sript, which receives as argument the basepath containing the DSLCC traind and gold folders. 
 Example:
 ```
 python utils/preprocessing.py --data_dir DSL-Task/data/DSLCC-v2.1
