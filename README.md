@@ -20,7 +20,7 @@ python train.py --config config.json --serialization_dir weights
 ```
 
 # Standalone Validation
-If you already have a trained model, you can directly assess its performance against the validation partition using the follow script:
+If you already have a trained model, you can directly assess its performance against the validation partition using the following script:
 
 ```
 python eval.py --config config.json --serialization_dir weights --model_checkpoint best.th
